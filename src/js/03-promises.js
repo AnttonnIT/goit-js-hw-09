@@ -12,7 +12,28 @@ function onFormSubmit(e) {
   const amount = Number(e.currentTarget.amount.value);
 
   for (let position = 1; position <= amount; position += 1) {
-    createPromise(position, delay);
+    createPromise(position, delay)
+      .then(({ position, delay }) => {
+        Notiflix.Notify.success(
+          `✅ Fulfilled promise ${position} in ${delay}ms`,
+          {
+            fontSize: '16px',
+            width: '350px',
+            useIcon: false,
+          }
+        );
+      })
+      .catch(({ position, delay }) => {
+        Notiflix.Notify.failure(
+          `❌ Rejected promise ${position} in ${delay}ms`,
+          {
+            fontSize: '16px',
+            width: '350px',
+            useIcon: false,
+          }
+        );
+      });
+
     delay += step;
   }
 }
@@ -29,23 +50,5 @@ function createPromise(position, delay) {
       }
     }, delay);
   });
-
-  promise
-    .then(({ position, delay }) => {
-      Notiflix.Notify.success(
-        `✅ Fulfilled promise ${position} in ${delay}ms`,
-        {
-          fontSize: '16px',
-          width: '350px',
-          useIcon: false,
-        }
-      );
-    })
-    .catch(({ position, delay }) => {
-      Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
-        fontSize: '16px',
-        width: '350px',
-        useIcon: false,
-      });
-    });
+  return promise;
 }

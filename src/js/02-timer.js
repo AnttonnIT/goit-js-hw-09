@@ -50,8 +50,9 @@ const timer = {
 startBtnEl.addEventListener('click', onClickStartBtn);
 
 function onClickStartBtn() {
-  timer.start();
+  inputEl.disabled = true;
   startBtnEl.disabled = true;
+  timer.start();
 }
 function updateTextContent({ days, hours, minutes, seconds }) {
   secondsEl.textContent = seconds;
