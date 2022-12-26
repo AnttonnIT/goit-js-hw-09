@@ -36,6 +36,7 @@ const timer = {
       if (dateFuture - datePresent < 1000) {
         this.stop(timerId);
       }
+
       const convertResult = convertMs(dateFuture - datePresent);
 
       updateTextContent(convertResult);
@@ -43,7 +44,6 @@ const timer = {
   },
   stop(id) {
     clearInterval(id);
-    startBtnEl.disabled = true;
   },
 };
 
@@ -51,6 +51,7 @@ startBtnEl.addEventListener('click', onClickStartBtn);
 
 function onClickStartBtn() {
   timer.start();
+  startBtnEl.disabled = true;
 }
 function updateTextContent({ days, hours, minutes, seconds }) {
   secondsEl.textContent = seconds;
